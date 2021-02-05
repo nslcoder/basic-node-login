@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System - Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+
+    <form action="/users/register" method="POST">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" value="<%= typeof name != "undefined" ? name : "" %>">
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" value="<%= typeof email != "undefined" ? email : "" %>">
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" value="<%= typeof password != "undefined" ? password : "" %>">
+        </div>
+
+        
+        <div>
+            <label for="password2">Confirm Password</label>
+            <input type="password" name="password2" value="<%= typeof password2 != "undefined" ? password2 : "" %>">
+        </div>
+
+        <button>Register</button>
+    </form>
+
+    <p>Already have an account?<a href="/users/login">Login</a></p>
+</body>
+</html>
