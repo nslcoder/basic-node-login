@@ -6,7 +6,15 @@
     <title>Login System - Register</title>
 </head>
 <body>
+    <nav><a href="/">Home</a></nav>
+    
     <h1>Register</h1>
+
+    <% if(typeof errors != "undefined") { %>
+        <% errors.forEach(err => { %>
+            <p><%= err.msg %></p> 
+        <% }) %>
+    <% } %>
 
     <form action="/users/register" method="POST">
         <div>

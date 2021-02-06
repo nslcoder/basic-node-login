@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const indexRoutes = require("./routes/index");
 const usersRoutes = require("./routes/users");
@@ -12,6 +14,18 @@ const dbURL = process.env.MONGODB_URL;
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: "lazykeys",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.successMsg = req.flash("successMsg");
+    res.locals.errorMsg = req.flash("errorMsg");
+    res.locals.error = req.flash("error");
+    next();
+})
 
 // Connect to MongoDB with Mongoose
 mongoose.connect(dbURL, {

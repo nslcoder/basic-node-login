@@ -6,7 +6,21 @@
     <title>Login System - Login</title>
 </head>
 <body>
+    <nav><a href="/">Home</a></nav>
+    
     <h1>Login</h1>
+
+    <% if(typeof successMsg != "undefined") { %>
+        <p><%= successMsg %></p>
+    <% } %>
+    
+    <% if(typeof errorMsg != "undefined") { %>
+        <p><%= errorMsg %></p>
+    <% } %>
+    
+    <% if(typeof error != "undefined") { %>
+        <p><%= error %></p>
+    <% } %>
 
     <form action="/users/login" metho="POST">
         <div>
