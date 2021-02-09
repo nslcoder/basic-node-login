@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const indexRoutes = require("./routes/index");
 const usersRoutes = require("./routes/users");
-require("./passport-config")(passport);
+require("./config/passport-config")(passport);
 
 const app = express();
 
