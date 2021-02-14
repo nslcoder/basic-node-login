@@ -1,52 +1,82 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
-const flash = require("connect-flash");
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const session = require("express-session");
 
-const indexRoutes = require("./routes/index");
 const usersRoutes = require("./routes/users");
-require("./config/passport-config")(passport);
+const User = require("./models/User");
+
+// Specify the passport strategy to use 
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        if (user.password != password) { return done(null, false); }
+        return done(null, user);
+      });
+    }
+  ));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
 
 const app = express();
 
+// Environment variables 
 const port = process.env.PORT || 3000;
 const dbURL = process.env.MONGODB_URL;
 
+// Set up a view engine
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: "lazykeys",
+    secret: "psycat",
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
-app.use((req, res, next) => {
-    res.locals.successMsg = req.flash("successMsg");
-    res.locals.errorMsg = req.flash("errorMsg");
-    res.locals.error = req.flash("error");
-    next();
-})
 
-// Connect to MongoDB with Mongoose
+// Connect to MongoDB via Mongoose
 mongoose.connect(dbURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true
 })
-  .then(() => {
-      console.log("Database connected.");
-  })
-  .catch(err => {
-      console.log(err);
-  });
+    .then(() => {
+        console.log("Database connected.");
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 // Routes
-app.use("/", indexRoutes);
-app.use("/users", usersRoutes);
+app.get("/", (req, res) => {
+    res.render("index");
+})
 
-app.listen(port, () => console.log(`The server is listening on port ${port}.`));
+app.get("/register", (req, res) => {
+    res.render("register");
+})
+
+app.use("/apis", usersRoutes);
+
+// Listen at port
+app.listen(port, () => {
+    console.log(`The server is listening at port ${port}.`);
+})
