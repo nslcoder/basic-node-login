@@ -14,19 +14,18 @@ router.post("/register", (req, res) => {
         await User.create(req.body);
         res.redirect("/");
     })
-
 })
 
 // Login
-/* router.post("/login", async (req, res) => {
-    await User.find({ username: req.body.username, password: req.body.password });
-    res.render("dashboard", { username: req.body.username});
-}) */
-
 router.post("/login", passport.authenticate("local", { failureRedirect: "/login"}), 
     function(req, res) {
         res.render("dashboard", { username: req.body.username });
-    })
+})
 
+// Logout
+router.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+})
 
 module.exports = router;

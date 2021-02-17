@@ -9,6 +9,8 @@
 </head>
 <body>
         <h1>Welcome <%= username %> to Dashboard</h1>
-        <a href="/">Logout</a>
+        <form action="/apis/logout" method="GET">
+            <button>Logout</button>
+        </form>
 </body>
 </html>
