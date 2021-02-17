@@ -1,13 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
 // Register an account
-router.post("/register", async (req, res) => {
-    /* const { username, name, email, password, password2 } = req.body; */
-    await User.create(req.body);
-    res.redirect("/");
+router.post("/register", (req, res) => {
+    const { password } = req.body;
+    
+    bcrypt.hash(password, 10, async function(err, hash) {
+        if(err) return console.log(err);
+        req.body.password = hash;
+        await User.create(req.body);
+        res.redirect("/");
+    })
+
 })
 
 // Login

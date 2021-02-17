@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 
 const usersRoutes = require("./routes/users");
 const User = require("./models/User");
@@ -15,8 +16,14 @@ passport.use(new LocalStrategy(
       User.findOne({ username: username }, function (err, user) {
         if (err) { return done(err); }
         if (!user) { return done(null, false); }
-        if (user.password != password) { return done(null, false); }
-        return done(null, user);
+        bcrypt.compare(password, user.password, function(err, result) {
+            if(err) return console.log(err);
+            if(!result) {
+                return done(null, false, { message: "Incorrect password" });
+            } else {
+                return done(null, user);
+            }
+        });
       });
     }
   ));
