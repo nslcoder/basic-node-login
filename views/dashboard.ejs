@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> -->
-    <title>Login System - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Basic Node Login - Dashboard</title>
 </head>
 <body>
-        <h1>Welcome <%= username %> to Dashboard</h1>
+        <!-- <h1>Welcome <%= username %> to Dashboard</h1>
         <form action="/apis/logout" method="GET">
             <button>Logout</button>
-        </form>
+        </form> -->
+
+        <div class="container d-flex align-items-center min-vh-100">
+            <div class="container border rounded border-dark w-auto p-5">
+                <h1 class="mb-3 text-center">Welcome <%= username %> to Dashboard!</h1>
+        
+                <form action="/apis/logout" method="GET" class="mt-5 mb-3">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">Logout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 </body>
 </html>
