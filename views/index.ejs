@@ -7,10 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>Basic Node Login</title>
 </head>
-<body>
-        <div class="container d-flex align-items-center min-vh-100">
-            <div class="container border rounded border-dark w-auto p-5">
-                <h1 class="mb-3 text-center">Sign In</h1>
+<body style="background-color: #dee2e4;">
+        <div class="container d-flex align-items-center flex-column justify-content-center min-vh-100">
+            <div class="container text-center mb-4">
+                <h1 class="fw-bold">Basic Node Login</h1>
+                <h2 class="text-secondary">Session-based Authentication</h2>
+            </div>
+
+            <div class="container border rounded p-5 w-auto" style="background-color: #fff;">
+                <h2 class="mb-3 text-center">Sign In</h2>
         
                 <form action="/apis/login" method="POST" class="mt-5 mb-3">
                     <div class="mb-3">
@@ -30,6 +35,8 @@
                     <a href="/register" class="text-decoration-none">Register an account</a>
                 </div>
             </div>
+
+            <div class="container text-secondary text-center mt-4">Made with dedication by <a href="https://nslcoder.github.io/" target="_blank" rel="noopener" class="text-decoration-none">nslcoder</a> (Lokesh Gurung) for learning.</div>
         </div>
 </body>
 </html>
